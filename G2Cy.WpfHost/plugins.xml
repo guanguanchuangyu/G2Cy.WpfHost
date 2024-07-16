@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<PluginCatalog xmlns="http://www.ikriv.com/wpfHosting/plugins">
+  <Plugins>
+    <Plugin Name="Test Exceptions" 
+            Version="1.0" 
+            Description="Tests excetion handling for UI thread and worker thread" 
+            AssemblyPath="..\..\..\Plugins\TestExceptions\bin\Release\TestExceptions.dll" 
+            MainClass="TestExceptions.Plugin" />
+
+    <Plugin Name="Bitness Check (32 bit)"
+            Version="1.0"
+            Description="Runs BitnessChcek plugin at 32 bit"
+            AssemblyPath="Plugins/BitnessCheck/x86/BitnessCheck.dll"
+            MainClass="BitnessCheck.Plugin"
+            Bits="32" />
+
+    <Plugin Name="Bitness Check (64 bit)"
+            Version="1.0"
+            Description="Runs BitnessCheck plugin at 64 bit"
+            AssemblyPath="Plugins/BitnessCheck/x64/BitnessCheck.dll"
+            MainClass="BitnessCheck.Plugin"
+            Bits="64" />
+
+    <Plugin Name="Use Log service"
+            Version="1.0"
+            Description="Plugin that writes messages to the host log file"
+            AssemblyPath="..\..\..\Plugins\UseLogService\bin\Release\UseLogService.dll"
+            MainClass="UseLogService.Plugin"
+            Parameters="Default message from plugins.xml file"/>
+  </Plugins>
+</PluginCatalog>

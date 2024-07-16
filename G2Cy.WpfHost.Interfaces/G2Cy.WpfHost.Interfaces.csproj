@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+	  <UseWPF>true</UseWPF>
+  </PropertyGroup>
+	
+   <PropertyGroup>
+   	<LangVersion>10.0</LangVersion>
+   </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="dotnetCampus.Ipc" Version="2.0.0-alpha412" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.0" />
+	</ItemGroup>
+
+</Project>

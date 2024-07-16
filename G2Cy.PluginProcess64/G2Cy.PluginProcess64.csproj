@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<OutputType>Exe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+	</ItemGroup>
+	
+  <ItemGroup>
+    <Compile Include="..\G2Cy.PluginProcess\PluginProcessOptions.cs" Link="PluginProcessOptions.cs" />
+    <Compile Include="..\G2Cy.PluginProcess\Program.cs" Link="Program.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\G2Cy.PluginProcess\appsettings.json" Link="appsettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\G2Cy.PluginProcess\log4net.config" Link="log4net.config" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\G2Cy.Log4Net\G2Cy.Log4Net.csproj" />
+		<ProjectReference Include="..\G2Cy.PluginHosting\G2Cy.PluginHosting.csproj" />
+	</ItemGroup>
+	
+</Project>
