@@ -5,7 +5,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	  <UseWPF>true</UseWPF>
+	  <!--<UseWPF>true</UseWPF>-->
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,11 +14,10 @@
 	  <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="8.0.0" />
 	  <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
   </ItemGroup>
-
+	
   <ItemGroup>
-    <ProjectReference Include="..\G2Cy.Log4Net\G2Cy.Log4Net.csproj" />
+	<ProjectReference Include="..\G2Cy.Log4Net\G2Cy.Log4Net.csproj"/>
     <ProjectReference Include="..\G2Cy.PluginHosting\G2Cy.PluginHosting.csproj" />
-	  <!--<ProjectReference Include="..\BitnessCheck\BitnessCheck.csproj" />-->
   </ItemGroup>
 
   <ItemGroup>

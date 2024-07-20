@@ -18,6 +18,6 @@ namespace G2Cy.WpfHost.Interfaces
         /// Creates plugin's visual element; called only ones in plugin's lifetime
         /// </summary>
         /// <returns>WPF framework element of the plugin</returns>
-        FrameworkElement CreateControl();
+        object CreateControl();
     }
 }

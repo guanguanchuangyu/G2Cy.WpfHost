@@ -14,7 +14,7 @@ namespace G2Cy.WpfHost.Interfaces
     /// </summary>
     public abstract class PluginBase : MarshalByRefObject, IPlugin
     {
-        public abstract FrameworkElement CreateControl();
+        public abstract object CreateControl();
 
         public virtual object GetService(Type serviceType)
         {

@@ -51,8 +51,14 @@ namespace G2Cy.PluginHosting
         /// </summary>
         /// <param name="element">元素节点</param>
         /// <returns></returns>
-        private static IntPtr ViewToHwnd(FrameworkElement element)
+        private static IntPtr ViewToHwnd(object obj)
         {
+            Visual element = obj as Visual;
+
+            if (element is null)
+            {
+                return new IntPtr(0);
+            }
             var p = new HwndSourceParameters()
             {
                 ParentWindow = new IntPtr(-3), // message only
