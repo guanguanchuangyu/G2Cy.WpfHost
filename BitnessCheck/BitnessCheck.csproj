@@ -7,10 +7,21 @@
     <ImplicitUsings>enable</ImplicitUsings>
 	<Platforms>AnyCPU;x86;x64</Platforms>
   </PropertyGroup>
+
+  <ItemGroup>
+	  <PackageReference Include="HandyControl" Version="3.5.1" >
+		  <ExcludeAssets>runtime</ExcludeAssets>
+	  </PackageReference>
+	<Page Update="Properties\DesignTimeResources.xaml">
+	  <Generator>MSBuild:Compile</Generator>
+	  <SubType>Designer</SubType>
+	  <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
+	</Page>
+  </ItemGroup>
 	
   <ItemGroup>
 	  <ProjectReference Include="..\G2Cy.WpfHost.Interfaces\G2Cy.WpfHost.Interfaces.csproj">
-		  
+		  <ExcludeAssets>runtime</ExcludeAssets>
 	  </ProjectReference>
   </ItemGroup>
 
