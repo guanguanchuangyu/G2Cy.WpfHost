@@ -25,9 +25,9 @@ namespace G2Cy.PluginHosting
             pluginLoader = loader;
         }
 
-        public void Run(string name)
+        public void Run(string name,string hostdir)
         {
-            pluginLoader.Run(name);
+            pluginLoader.Run(name, hostdir);
         }
     }
 }

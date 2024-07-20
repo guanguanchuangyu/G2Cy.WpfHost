@@ -34,9 +34,12 @@ namespace G2Cy.PluginProcess
 
             IServiceCollection services = builder.Services;
 
+            services.AddSingleton<AssemblyResolver>();
+
             services.AddSingleton<PluginLoader>(provider => {
                 ILogger<PluginLoader> logger = provider.GetService<ILogger<PluginLoader>>();
-                return new PluginLoader(logger, Dispatcher.CurrentDispatcher);
+                AssemblyResolver assemblyResolver = provider.GetService<AssemblyResolver>();
+                return new PluginLoader(logger, Dispatcher.CurrentDispatcher,assemblyResolver);
             });
 
             services.AddSingleton<PluginLoaderBootstrapper>();
@@ -49,7 +52,7 @@ namespace G2Cy.PluginProcess
 
             bool pauseOnError = processOptions.PauseOnError;
 
-            if (args.Length != 2)
+            if (args.Length != 3)
             {
                 Console.Error.WriteLine("Usage: PluginProcess name assemblyPath");
                 if (pauseOnError) Console.ReadLine();
@@ -64,6 +67,8 @@ namespace G2Cy.PluginProcess
 
                 var assemblyPath = args[1];
                 Console.WriteLine("Plugin assembly: {0}", assemblyPath);
+                var hostDir = args[2];// 获取主进程的工作路径
+                Console.WriteLine("Host WorkDir: {0}", hostDir);
                 var fileinfo = new FileInfo(assemblyPath);
                 if (!fileinfo.Exists)
                 {
@@ -75,7 +80,7 @@ namespace G2Cy.PluginProcess
                 //var appDomain = CreateAppDomain(appBase, configFile);
                 //var bootstrapper = CreateInstanceFrom<PluginLoaderBootstrapper>(appDomain);
                 var bootstrapper = services.BuildServiceProvider().GetService<PluginLoaderBootstrapper>();
-                bootstrapper.Run(name);
+                bootstrapper.Run(name, hostDir);
             }
             catch (Exception ex)
             {
@@ -92,7 +97,7 @@ namespace G2Cy.PluginProcess
 
         private static void CurrentDomain_AssemblyLoad(object? sender, AssemblyLoadEventArgs args)
         {
-            Console.WriteLine(args.LoadedAssembly.FullName);
+            Console.WriteLine($"PluginProcess:{args.LoadedAssembly.FullName}");
         }
 
         private static T CreateInstanceFrom<T>(AppDomain appDomain)

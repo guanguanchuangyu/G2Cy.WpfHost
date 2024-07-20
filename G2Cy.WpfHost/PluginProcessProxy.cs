@@ -111,7 +111,7 @@ namespace G2Cy.WpfHost
 
             var info = new ProcessStartInfo
             {
-                Arguments = _name + " " + quotedAssemblyPath,
+                Arguments = _name + " " + quotedAssemblyPath +" " + AppDomain.CurrentDomain.BaseDirectory,// 命令行运行时传入主进程工作路径
                 CreateNoWindow = createNoWindow,
                 UseShellExecute = false,
                 FileName = processName

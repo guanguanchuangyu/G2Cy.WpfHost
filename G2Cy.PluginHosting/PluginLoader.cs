@@ -22,16 +22,18 @@ namespace G2Cy.PluginHosting
     public class PluginLoader : MarshalByRefObject, IPluginLoader
     {
         private Dispatcher _dispatcher;
+        private AssemblyResolver _assemblyResolver;
         private ILogger _log;
         private IWpfHost _host;
         private string _name;
-        public PluginLoader(ILogger<PluginLoader> logger,Dispatcher dispatcher)
+        public PluginLoader(ILogger<PluginLoader> logger,Dispatcher dispatcher, AssemblyResolver assemblyResolver)
         {
             _log = logger;
             _dispatcher = dispatcher;
+            _assemblyResolver = assemblyResolver;
         }
 
-        public void Run(string name)
+        public void Run(string name,string hostdir)
         {
             _name = name;
             //_dispatcher = Dispatcher.CurrentDispatcher;
@@ -39,7 +41,9 @@ namespace G2Cy.PluginHosting
             try
             {
                 _log.LogInformation("PluginHost running at " + IntPtr.Size * 8 + " bit, CLR version " + Environment.Version);
-                new AssemblyResolver().Setup();
+                // 获取主进程所在的目录
+
+                _assemblyResolver.Setup(hostdir);
                 AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
                 // 注册管道
                 IpcServices.RegisterChannel(name);
