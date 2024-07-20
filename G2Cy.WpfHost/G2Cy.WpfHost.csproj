@@ -14,6 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
+  	<PackageReference Include="HandyControl" Version="3.5.1" />
+  </ItemGroup>
+	
+  <ItemGroup>
     <ProjectReference Include="..\G2Cy.PluginHosting\G2Cy.PluginHosting.csproj" />
     <ProjectReference Include="..\G2Cy.WpfHost.Interfaces\G2Cy.WpfHost.Interfaces.csproj" />
   </ItemGroup>
