@@ -67,7 +67,7 @@ namespace BitnessCheck
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "Failure");
+                throw ex;
             }
 
             UpdateMemoryText();

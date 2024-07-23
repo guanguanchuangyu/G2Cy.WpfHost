@@ -8,6 +8,7 @@ using System;
 using System.Windows;
 using G2Cy.PluginHosting;
 using Microsoft.Extensions.Logging;
+using MessageBox = HandyControl.Controls.MessageBox;
 
 namespace G2Cy.WpfHost
 {
