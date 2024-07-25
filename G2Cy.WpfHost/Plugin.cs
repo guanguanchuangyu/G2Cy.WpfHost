@@ -119,8 +119,10 @@ namespace G2Cy.WpfHost
                 Name = CatalogEntry.Name,
                 Parameters = CatalogEntry.Parameters
             };
-            var errorservice = _childContainer.Resolve<ErrorHandlingService>();
-            _containerRegistry.Register<PluginProcessProxy>(provider => { return new PluginProcessProxy(_startupInfp, _host, errorservice); });
+            //var errorservice = _childContainer.Resolve<ErrorHandlingService>();
+            _containerRegistry.Register<PluginStartupInfo>(provider => _startupInfp);
+            //_containerRegistry.Register<PluginProcessProxy>(provider => { return new PluginProcessProxy(_startupInfp, _host, errorservice); });
+            _containerRegistry.Register<PluginProcessProxy>();
         }
 
         private string GetFullPath(string assemblyPath)

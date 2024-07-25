@@ -111,7 +111,7 @@ namespace G2Cy.WpfHost
 
             var info = new ProcessStartInfo
             {
-                Arguments = _name + " " + quotedAssemblyPath +" " + AppDomain.CurrentDomain.BaseDirectory,// 命令行运行时传入主进程工作路径
+                Arguments = _name + " " + quotedAssemblyPath +" " + AppDomain.CurrentDomain.BaseDirectory + " " + _startupInfo.MainClass,// 命令行运行时传入主进程工作路径
                 CreateNoWindow = createNoWindow,
                 UseShellExecute = false,
                 FileName = processName
@@ -130,7 +130,7 @@ namespace G2Cy.WpfHost
             }
             //TODO:加载配置控制进程准备超时时间
             //var timeoutMs = int.Parse(ConfigurationManager.AppSettings["PluginProcess.ReadyTimeoutMs"]);
-            var timeoutMs = 5000;
+            var timeoutMs = 10000;
 
             if (!_readyEvent.WaitOne(timeoutMs))
             {

@@ -42,7 +42,6 @@ namespace G2Cy.PluginHosting
             {
                 _log.LogInformation("PluginHost running at " + IntPtr.Size * 8 + " bit, CLR version " + Environment.Version);
                 // 获取主进程所在的目录
-
                 _assemblyResolver.Setup(hostdir);
                 AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
                 // 注册管道
@@ -117,7 +116,7 @@ namespace G2Cy.PluginHosting
 
             try
             {
-                var obj = PluginCreator.CreatePlugin(startupInfo.FullAssemblyPath, startupInfo.MainClass, _host);
+                var obj = PluginCreator.CreatePlugin(startupInfo,_host);
                 _log.LogDebug("Created local plugin class instance");
 
                 var localPlugin = obj as IPlugin;

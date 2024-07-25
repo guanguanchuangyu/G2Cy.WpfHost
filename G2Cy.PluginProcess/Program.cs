@@ -18,6 +18,7 @@ using Microsoft.Extensions.Logging;
 using G2Cy.Log4Net;
 using System.Windows.Shapes;
 using Path = System.IO.Path;
+using System.Reflection;
 
 namespace G2Cy.PluginProcess
 {
@@ -35,8 +36,6 @@ namespace G2Cy.PluginProcess
             IServiceCollection services = builder.Services;
 
             services.AddSingleton<AssemblyResolver>();
-            // TODO: 进程执行时，需要在构建服务提供器之前，注册插件程序集中的主类类型
-
             services.AddSingleton<PluginLoader>(provider => {
                 ILogger<PluginLoader> logger = provider.GetService<ILogger<PluginLoader>>();
                 AssemblyResolver assemblyResolver = provider.GetService<AssemblyResolver>();
@@ -44,19 +43,10 @@ namespace G2Cy.PluginProcess
             });
 
             services.AddSingleton<PluginLoaderBootstrapper>();
-            IHost host = builder.Build();
-            IConfiguration configuration = host.Services.GetRequiredService<IConfiguration>();
-            PluginProcessOptions processOptions = new PluginProcessOptions();
-            configuration.GetSection("PluginLoader").Bind(processOptions);
-            bool breakIntoDebugger = processOptions.BreakIntoDebugger;
-            if (breakIntoDebugger) System.Diagnostics.Debugger.Break();
 
-            bool pauseOnError = processOptions.PauseOnError;
-
-            if (args.Length != 3)
+            if (args.Length != 4)
             {
                 Console.Error.WriteLine("Usage: PluginProcess name assemblyPath");
-                if (pauseOnError) Console.ReadLine();
                 return;
             }
 
@@ -71,25 +61,35 @@ namespace G2Cy.PluginProcess
                 var hostDir = args[2];// 获取主进程的工作路径
                 Console.WriteLine("Host WorkDir: {0}", hostDir);
                 CheckFileExists(assemblyPath);
+
+                Assembly assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(assemblyPath);
+                var typeName = args[3]; // 主类类型
+                // TODO: 进程执行时，需要在构建服务提供器之前，注册插件程序集中的主类类型
+                //var assembly = Assembly.LoadFile(assemblyPath);
+                // 指定程序集中的主类类型
+                var type = assembly.GetType(typeName);
+                if (type == null) throw new InvalidOperationException("Could not find type " + typeName + " in assembly " + Path.GetFileName(assemblyPath));
+                services.AddSingleton(type);
                 //var configFile = GetConfigFile(assemblyPath);
                 //var appBase = Path.GetDirectoryName(assemblyPath);
                 //var appDomain = CreateAppDomain(appBase, configFile);
                 //var bootstrapper = CreateInstanceFrom<PluginLoaderBootstrapper>(appDomain);
-
-                var bootstrapper = services.BuildServiceProvider().GetService<PluginLoaderBootstrapper>();
+                IHost host = builder.Build();
+                var bootstrapper = host.Services.GetService<PluginLoaderBootstrapper>();
                 bootstrapper.Run(name, hostDir);
+                IConfiguration configuration = host.Services.GetRequiredService<IConfiguration>();
+                PluginProcessOptions processOptions = new PluginProcessOptions();
+                configuration.GetSection("PluginLoader").Bind(processOptions);
+                bool breakIntoDebugger = processOptions.BreakIntoDebugger;
+                if (breakIntoDebugger) System.Diagnostics.Debugger.Break();
+                bool pauseOnError = processOptions.PauseOnError;
+                host.Run();
+                if (pauseOnError) Console.ReadLine();
             }
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex);
-                if (pauseOnError)
-                {
-                    Console.Error.WriteLine("Pausing on error, press any key to exit...");
-                    Console.ReadLine();
-                }
             }
-
-            host.Run();
         }
 
         private static void CurrentDomain_AssemblyLoad(object? sender, AssemblyLoadEventArgs args)
