@@ -35,7 +35,8 @@ namespace G2Cy.WpfHost
 
         public object GetService(Type serviceType)
         {
-            return _container.Resolve(serviceType);
+            var instance = _container.Resolve(serviceType);
+            return instance;
         }
 
         public event Action<Exception> FatalError;

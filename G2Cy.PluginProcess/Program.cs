@@ -35,6 +35,7 @@ namespace G2Cy.PluginProcess
             IServiceCollection services = builder.Services;
 
             services.AddSingleton<AssemblyResolver>();
+            // TODO: 进程执行时，需要在构建服务提供器之前，注册插件程序集中的主类类型
 
             services.AddSingleton<PluginLoader>(provider => {
                 ILogger<PluginLoader> logger = provider.GetService<ILogger<PluginLoader>>();
@@ -69,16 +70,12 @@ namespace G2Cy.PluginProcess
                 Console.WriteLine("Plugin assembly: {0}", assemblyPath);
                 var hostDir = args[2];// 获取主进程的工作路径
                 Console.WriteLine("Host WorkDir: {0}", hostDir);
-                var fileinfo = new FileInfo(assemblyPath);
-                if (!fileinfo.Exists)
-                {
-                    throw new InvalidOperationException("File '" + fileinfo.FullName + "' does not exist");
-                }
-                //CheckFileExists(assemblyPath);
+                CheckFileExists(assemblyPath);
                 //var configFile = GetConfigFile(assemblyPath);
                 //var appBase = Path.GetDirectoryName(assemblyPath);
                 //var appDomain = CreateAppDomain(appBase, configFile);
                 //var bootstrapper = CreateInstanceFrom<PluginLoaderBootstrapper>(appDomain);
+
                 var bootstrapper = services.BuildServiceProvider().GetService<PluginLoaderBootstrapper>();
                 bootstrapper.Run(name, hostDir);
             }
@@ -107,7 +104,11 @@ namespace G2Cy.PluginProcess
 
         private static void CheckFileExists(string path)
         {
-            if (!File.Exists(path)) throw new InvalidOperationException("File '" + path + "' does not exist");
+            var fileinfo = new FileInfo(path);
+            if (!fileinfo.Exists)
+            {
+                throw new InvalidOperationException("File '" + fileinfo.FullName + "' does not exist");
+            }
         }
 
         private static string GetConfigFile(string assemblyPath)

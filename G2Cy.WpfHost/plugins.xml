@@ -24,7 +24,7 @@
     <Plugin Name="Use Log service"
             Version="1.0"
             Description="Plugin that writes messages to the host log file"
-            AssemblyPath="..\..\..\Plugins\UseLogService\bin\Release\UseLogService.dll"
+            AssemblyPath="Plugins/UseLogService/x86/UseLogService.dll"
             MainClass="UseLogService.Plugin"
             Parameters="Default message from plugins.xml file"/>
   </Plugins>
