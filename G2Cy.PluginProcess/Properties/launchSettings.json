@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "G2Cy.PluginProcess": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

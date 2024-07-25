@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "G2Cy.WpfHost": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}
