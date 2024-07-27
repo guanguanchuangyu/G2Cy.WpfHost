@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "UseLogService": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}
