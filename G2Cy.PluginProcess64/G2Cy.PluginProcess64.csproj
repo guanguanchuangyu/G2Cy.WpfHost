@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\G2Cy.PluginProcess\appsettings.json" Link="appsettings.json" />
+    <Content Include="..\G2Cy.PluginProcess\Properties\launchSettings.json" Link="Properties\launchSettings.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\G2Cy.PluginProcess\log4net.config" Link="log4net.config" />

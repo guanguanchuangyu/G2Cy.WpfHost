@@ -2,7 +2,7 @@
   "profiles": {
     "G2Cy.WpfHost": {
       "commandName": "Project",
-      "nativeDebugging": true
+      "nativeDebugging": false
     }
   }
 }

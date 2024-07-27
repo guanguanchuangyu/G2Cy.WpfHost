@@ -2,7 +2,7 @@
   "profiles": {
     "UseLogService": {
       "commandName": "Project",
-      "nativeDebugging": true
+      "nativeDebugging": false
     }
   }
 }
