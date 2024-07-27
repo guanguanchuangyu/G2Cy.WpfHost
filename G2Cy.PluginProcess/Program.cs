@@ -45,7 +45,7 @@ namespace G2Cy.PluginProcess
                     return new PluginLoader(logger, Dispatcher.CurrentDispatcher, assemblyResolver, descriptors);
                 });
 
-                services.AddSingleton<PluginLoaderBootstrapper>();
+                //services.AddSingleton<PluginLoaderBootstrapper>();
 
                 services.AddSingleton(services);
 
