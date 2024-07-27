@@ -21,6 +21,7 @@ using System.IO;
 using System.Reflection;
 using System;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
+using System.Diagnostics;
 
 namespace G2Cy.Log4Net
 {
@@ -44,7 +45,9 @@ namespace G2Cy.Log4Net
         /// </summary>
         public Log4NetLoggerProvider(string log4NetConfigFile)
         {
-            string file = log4NetConfigFile ?? Path.Combine(AppDomain.CurrentDomain.BaseDirectory, DefaultLog4NetFileName);
+            Debug.WriteLine($"应用执行目录:{AppDomain.CurrentDomain.BaseDirectory}");
+            string file = File.Exists(log4NetConfigFile) ? log4NetConfigFile: Path.Combine(AppDomain.CurrentDomain.BaseDirectory, DefaultLog4NetFileName);
+            Debug.WriteLine($"日志配置目录:{file}");
             Assembly assembly = Assembly.GetEntryAssembly() ?? GetCallingAssemblyFromStartup();
             _loggerRepository = LogManager.CreateRepository(assembly, typeof(Hierarchy));
 
