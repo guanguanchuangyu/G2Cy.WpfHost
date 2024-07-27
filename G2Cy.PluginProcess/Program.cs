@@ -28,33 +28,33 @@ namespace G2Cy.PluginProcess
         [LoaderOptimization(LoaderOptimization.MultiDomainHost)]
         static void Main(string[] args)
         {
-            AppDomain.CurrentDomain.AssemblyLoad += CurrentDomain_AssemblyLoad;
-            HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
-            // 引入Log4Net
-            builder.Logging.AddLog4Net();
-
-            IServiceCollection services = builder.Services;
-
-            services.AddSingleton<AssemblyResolver>();
-            services.AddSingleton<PluginLoader>(provider => {
-                ILogger<PluginLoader> logger = provider.GetService<ILogger<PluginLoader>>();
-                AssemblyResolver assemblyResolver = provider.GetService<AssemblyResolver>();
-                IServiceCollection descriptors = provider.GetService<IServiceCollection>();
-                return new PluginLoader(logger, Dispatcher.CurrentDispatcher,assemblyResolver, descriptors);
-            });
-
-            services.AddSingleton<PluginLoaderBootstrapper>();
-
-            services.AddSingleton(services);
-
-            if (args.Length != 4)
-            {
-                Console.Error.WriteLine("Usage: PluginProcess name assemblyPath");
-                return;
-            }
-
             try
             {
+                AppDomain.CurrentDomain.AssemblyLoad += CurrentDomain_AssemblyLoad;
+                HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
+                // 引入Log4Net
+                builder.Logging.AddLog4Net();
+
+                IServiceCollection services = builder.Services;
+
+                services.AddSingleton<AssemblyResolver>();
+                services.AddSingleton<PluginLoader>(provider => {
+                    ILogger<PluginLoader> logger = provider.GetService<ILogger<PluginLoader>>();
+                    AssemblyResolver assemblyResolver = provider.GetService<AssemblyResolver>();
+                    IServiceCollection descriptors = provider.GetService<IServiceCollection>();
+                    return new PluginLoader(logger, Dispatcher.CurrentDispatcher, assemblyResolver, descriptors);
+                });
+
+                services.AddSingleton<PluginLoaderBootstrapper>();
+
+                services.AddSingleton(services);
+
+                if (args.Length != 4)
+                {
+                    Console.Error.WriteLine("Usage: PluginProcess name assemblyPath");
+                    return;
+                }
+
                 var name = args[0];
                 int bits = IntPtr.Size * 8;
                 Console.WriteLine("Starting PluginProcess {0}, {1} bit", name, bits);
@@ -86,8 +86,8 @@ namespace G2Cy.PluginProcess
                 bool breakIntoDebugger = processOptions.BreakIntoDebugger;
                 if (breakIntoDebugger) System.Diagnostics.Debugger.Break();
                 bool pauseOnError = processOptions.PauseOnError;
-                IHost host = builder.Build();// 所有服务注册都需要在host.builder之前完成
-                host.Run();
+                //IHost host = builder.Build();// 所有服务注册都需要在host.builder之前完成
+                //host.Run();
                 if (pauseOnError) Console.ReadLine();
             }
             catch (Exception ex)

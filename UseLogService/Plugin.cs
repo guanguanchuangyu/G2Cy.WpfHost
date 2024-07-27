@@ -19,7 +19,7 @@ namespace UseLogService
         private string _parameter;
         private MainUserControl _control;
         private IServiceProvider _serviceProvider;
-        public Plugin(IWpfHost host)
+        public Plugin()
         {
 
         }
