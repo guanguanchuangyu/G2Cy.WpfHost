@@ -4,6 +4,7 @@
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
 //
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Windows;
 
@@ -30,6 +31,11 @@ namespace G2Cy.WpfHost.Interfaces
         public override object InitializeLifetimeService()
         {
             return null; // live forever
+        }
+
+        public virtual void RegisterServices(IServiceCollection services)
+        { 
+            
         }
     }
 }

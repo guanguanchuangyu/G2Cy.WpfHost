@@ -39,10 +39,13 @@ namespace G2Cy.PluginProcess
             services.AddSingleton<PluginLoader>(provider => {
                 ILogger<PluginLoader> logger = provider.GetService<ILogger<PluginLoader>>();
                 AssemblyResolver assemblyResolver = provider.GetService<AssemblyResolver>();
-                return new PluginLoader(logger, Dispatcher.CurrentDispatcher,assemblyResolver);
+                IServiceCollection descriptors = provider.GetService<IServiceCollection>();
+                return new PluginLoader(logger, Dispatcher.CurrentDispatcher,assemblyResolver, descriptors);
             });
 
             services.AddSingleton<PluginLoaderBootstrapper>();
+
+            services.AddSingleton(services);
 
             if (args.Length != 4)
             {
@@ -74,15 +77,16 @@ namespace G2Cy.PluginProcess
                 //var appBase = Path.GetDirectoryName(assemblyPath);
                 //var appDomain = CreateAppDomain(appBase, configFile);
                 //var bootstrapper = CreateInstanceFrom<PluginLoaderBootstrapper>(appDomain);
-                IHost host = builder.Build();
-                var bootstrapper = host.Services.GetService<PluginLoaderBootstrapper>();
-                bootstrapper.Run(name, hostDir);
-                IConfiguration configuration = host.Services.GetRequiredService<IConfiguration>();
+                var provider = services.BuildServiceProvider();
+                var pluginLoader = provider.GetService<PluginLoader>();
+                pluginLoader.Run(name, hostDir);
+                IConfiguration configuration = provider.GetRequiredService<IConfiguration>();
                 PluginProcessOptions processOptions = new PluginProcessOptions();
                 configuration.GetSection("PluginLoader").Bind(processOptions);
                 bool breakIntoDebugger = processOptions.BreakIntoDebugger;
                 if (breakIntoDebugger) System.Diagnostics.Debugger.Break();
                 bool pauseOnError = processOptions.PauseOnError;
+                IHost host = builder.Build();// 所有服务注册都需要在host.builder之前完成
                 host.Run();
                 if (pauseOnError) Console.ReadLine();
             }

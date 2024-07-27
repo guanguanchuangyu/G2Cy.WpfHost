@@ -12,6 +12,7 @@ using System.Windows;
 using System.Windows.Threading;
 using dotnetCampus.Ipc.Pipes;
 using G2Cy.WpfHost.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace G2Cy.PluginHosting
@@ -26,11 +27,13 @@ namespace G2Cy.PluginHosting
         private ILogger _log;
         private IWpfHost _host;
         private string _name;
-        public PluginLoader(ILogger<PluginLoader> logger,Dispatcher dispatcher, AssemblyResolver assemblyResolver)
+        private IServiceCollection _services;
+        public PluginLoader(ILogger<PluginLoader> logger,Dispatcher dispatcher, AssemblyResolver assemblyResolver, IServiceCollection serviceDescriptors)
         {
             _log = logger;
             _dispatcher = dispatcher;
             _assemblyResolver = assemblyResolver;
+            _services = serviceDescriptors;
         }
 
         public void Run(string name,string hostdir)
@@ -65,6 +68,7 @@ namespace G2Cy.PluginHosting
         public IRemotePlugin LoadPlugin(PluginStartupInfo startupInfo)
         {
             string hostname = startupInfo.HostChannelName;
+            _services.AddSingleton(startupInfo);
             _host = IpcServices.GetIpcObject<IWpfHost>(hostname);
             _log.LogInformation(string.Format("LoadPlugin('{0}','{1}')", startupInfo.AssemblyName, startupInfo.MainClass));
 
@@ -128,7 +132,7 @@ namespace G2Cy.PluginHosting
 
                     throw new InvalidOperationException(message);
                 }
-                var remotePlugin = new RemotePlugin(localPlugin);
+                var remotePlugin = new RemotePlugin(localPlugin,_services);
                 Console.WriteLine("Created plugin control");
                 return remotePlugin;
             }

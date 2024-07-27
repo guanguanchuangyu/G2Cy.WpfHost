@@ -4,6 +4,7 @@
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
 //
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Windows;
 
@@ -19,5 +20,6 @@ namespace G2Cy.WpfHost.Interfaces
         /// </summary>
         /// <returns>WPF framework element of the plugin</returns>
         object CreateControl();
+        void RegisterServices(IServiceCollection services);
     }
 }

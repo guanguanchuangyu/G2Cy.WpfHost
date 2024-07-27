@@ -13,6 +13,7 @@ using System.Windows;
 //using System.AddIn.Contract;
 //using System.AddIn.Pipeline;
 using G2Cy.WpfHost.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace G2Cy.PluginHosting
 {
@@ -20,9 +21,10 @@ namespace G2Cy.PluginHosting
     {
         private readonly IPlugin _plugin;
 
-        public RemotePlugin(IPlugin plugin)
+        public RemotePlugin(IPlugin plugin,IServiceCollection services)
         {
             _plugin = plugin;
+            _plugin.RegisterServices(services);
             var control = plugin.CreateControl();
             var localContract = ViewToHwnd(control);
             //Contract = new NativeHandleContractInsulator(localContract);
