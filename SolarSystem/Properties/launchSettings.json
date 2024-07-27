@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "SolarSystem": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}
