@@ -27,5 +27,18 @@
             AssemblyPath="Plugins/UseLogService/x86/UseLogService.dll"
             MainClass="UseLogService.Plugin"
             Parameters="Default message from plugins.xml file"/>
+	  <Plugin Name="SolarSystem（32 bit）"
+			  Version="1.0"
+			  Description="Plugin that writes messages to the host log file"
+			  AssemblyPath="Plugins/SolarSystem/x86/SolarSystem.dll"
+			  MainClass="SolarSystem.Plugin"
+			  Parameters="Default message from plugins.xml file"/>
+	  <Plugin Name="SolarSystem（64 bit）"
+			  Version="1.0"
+			  Description="Plugin that writes messages to the host log file"
+			  AssemblyPath="Plugins/SolarSystem/x64/SolarSystem.dll"
+			  MainClass="SolarSystem.Plugin"
+			  Bits="64"
+			  Parameters="Default message from plugins.xml file"/>
   </Plugins>
 </PluginCatalog>
