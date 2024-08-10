@@ -21,5 +21,9 @@ namespace G2Cy.WpfHost.Interfaces
         /// <returns>WPF framework element of the plugin</returns>
         object CreateControl();
         void RegisterServices(IServiceCollection services);
+        /// <summary>
+        /// Initializes the plugin
+        /// </summary>
+        void InitPlugin();
     }
 }

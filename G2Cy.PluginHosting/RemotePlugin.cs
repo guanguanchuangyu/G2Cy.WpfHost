@@ -25,6 +25,7 @@ namespace G2Cy.PluginHosting
         {
             _plugin = plugin;
             _plugin.RegisterServices(services);
+            _plugin.InitPlugin();
             var control = plugin.CreateControl();
             var localContract = ViewToHwnd(control);
             //Contract = new NativeHandleContractInsulator(localContract);

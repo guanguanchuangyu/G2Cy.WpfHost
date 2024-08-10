@@ -37,5 +37,10 @@ namespace G2Cy.WpfHost.Interfaces
         { 
             
         }
+
+        public virtual void InitPlugin()
+        {
+            
+        }
     }
 }
