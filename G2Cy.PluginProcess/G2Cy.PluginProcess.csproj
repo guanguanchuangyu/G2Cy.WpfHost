@@ -7,6 +7,7 @@
     <!--<UseWPF>true</UseWPF>-->
   </PropertyGroup>
   <ItemGroup>
+    <!--<ProjectReference Include="..\G2Cy.EventAggregator\G2Cy.EventAggregator.csproj" />-->
     <ProjectReference Include="..\G2Cy.Log4Net\G2Cy.Log4Net.csproj" />
     <ProjectReference Include="..\G2Cy.PluginHosting\G2Cy.PluginHosting.csproj" />
   </ItemGroup>

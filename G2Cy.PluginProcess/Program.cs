@@ -4,11 +4,7 @@
 // You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
 //
-using System;
-using System.Configuration;
-using System.IO;
 using System.Runtime.Loader;
-using System.Windows;
 using System.Windows.Threading;
 using G2Cy.PluginHosting;
 using Microsoft.Extensions.Configuration;
@@ -16,7 +12,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using G2Cy.Log4Net;
-using System.Windows.Shapes;
 using Path = System.IO.Path;
 using System.Reflection;
 

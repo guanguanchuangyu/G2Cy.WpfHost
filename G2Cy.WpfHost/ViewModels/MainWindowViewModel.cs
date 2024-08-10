@@ -1,4 +1,5 @@
-﻿using Prism.Commands;
+﻿using G2Cy.WpfHost.Interfaces;
+using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace G2Cy.WpfHost.ViewModels
@@ -15,7 +17,7 @@ namespace G2Cy.WpfHost.ViewModels
         private readonly PluginController _pluginController;
         private readonly ErrorHandlingService _errorHandlingService;
 
-        public MainWindowViewModel(ErrorHandlingService errorHandlingService, PluginController pluginController)
+        public MainWindowViewModel(ErrorHandlingService errorHandlingService, PluginController pluginController, IEventAggregator eventAggregator)
         {
             _errorHandlingService = errorHandlingService;
             _pluginController = pluginController;
@@ -26,6 +28,9 @@ namespace G2Cy.WpfHost.ViewModels
             _pluginController.LoadCatalogAcync()
                 .ContinueWith(
                     unusedTask => { AvailablePlugins = _pluginController.AvailablePlugins; });
+            eventAggregator.Subscribe("666",(string msg) => {
+                MessageBox.Show(msg);
+            });
         }
 
         private IEnumerable<PluginCatalogEntry> _availablePlugins;

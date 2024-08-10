@@ -12,9 +12,13 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows;
+using CodeWF.EventBus.Socket;
+using Example;
+using G2Cy.EventAggregator;
 using G2Cy.WpfHost.Interfaces;
 using G2Cy.WpfHost.ViewModels;
 using G2Cy.WpfHost.Views;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Prism.DryIoc;
 using Prism.Ioc;
@@ -48,6 +52,11 @@ namespace G2Cy.WpfHost
         }
         protected override Window CreateShell()
         {
+            // 启动总线服务
+            var eventServer = Container.Resolve<EventServerHostService>();
+            eventServer.StartAsync(CancellationToken.None);
+            var eventClient = Container.Resolve<EventClientHostService>();
+            eventClient.StartAsync(CancellationToken.None);
             return Container.Resolve<MainWindow>();
         }
 
@@ -67,6 +76,14 @@ namespace G2Cy.WpfHost
             containerRegistry.Register(typeof(ILogger<>), typeof(Logger<>));
             containerRegistry.Register(typeof(ILoggerFactory), typeof(LoggerFactory));
             containerRegistry.RegisterSingleton<ErrorHandlingService>();
+            // 注册服务
+            var host = new EventServerHostService(new ServerOptions { Address = "127.0.0.1", Port = 8080 });
+            var aggregator = new EventSocketAggregator(new ClientOptions { ServerAddress = "127.0.0.1", ServerPort = 8080 });
+            // 注册事件队列
+            containerRegistry.RegisterInstance(host);
+            containerRegistry.RegisterInstance<IEventAggregator>(aggregator);
+            var client = new EventClientHostService(aggregator);
+            containerRegistry.RegisterInstance(client);
         }
 
         //protected override IModuleCatalog CreateModuleCatalog()

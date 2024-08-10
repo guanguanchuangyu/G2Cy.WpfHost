@@ -40,5 +40,10 @@
 			  MainClass="SolarSystem.Plugin"
 			  Bits="64"
 			  Parameters="Default message from plugins.xml file"/>
+	  <Plugin Name="EventPublisher（32 bit）"
+		  Version="1.0"
+		  Description="Plugin that event publisher"
+		  AssemblyPath="Plugins/EventPublisher/x86/EventPublisher.dll"
+		  MainClass="EventPublisher.Plugin"/>
   </Plugins>
 </PluginCatalog>
