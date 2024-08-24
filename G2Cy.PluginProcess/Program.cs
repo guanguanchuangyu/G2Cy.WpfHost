@@ -93,7 +93,7 @@ namespace G2Cy.PluginProcess
 
         private static void CurrentDomain_AssemblyLoad(object? sender, AssemblyLoadEventArgs args)
         {
-            Console.WriteLine($"PluginProcess:{args.LoadedAssembly.FullName}");
+            //Console.WriteLine($"PluginProcess:{args.LoadedAssembly.FullName}");
         }
 
         private static T CreateInstanceFrom<T>(AppDomain appDomain)

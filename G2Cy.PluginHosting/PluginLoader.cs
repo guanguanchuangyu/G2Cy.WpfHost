@@ -83,7 +83,7 @@ namespace G2Cy.PluginHosting
             if (result is Exception)
             {
                 _log.LogError("Error loading plugin:{0}", (Exception)result);
-                throw new TargetInvocationException((Exception)result);
+                ReportFatalError((Exception)result);
             }
             return (IRemotePlugin)result;
         }
@@ -169,7 +169,7 @@ namespace G2Cy.PluginHosting
 
         private void ReportFatalError(Exception exception)
         {
-            _log.LogError("Unhandled exception", exception);
+            _log.LogError("Unhandled exception:{0}", exception);
 
             if (_host != null)
             {
@@ -178,12 +178,14 @@ namespace G2Cy.PluginHosting
             }
             else
             {
-                _log.LogWarning("Host is null, cannot report error to host");
+                _log.LogError("Host is null, cannot report error to host");
             }
 
             _log.LogInformation("Exiting the process to prevent 'program stopped working' dialog");
             //_log.Dispose(); // flush pending data
-            Environment.Exit(2);
+            // 管道关闭
+            IpcServices.Dispose();
+            //Environment.Exit(2);
         }
     }
 }

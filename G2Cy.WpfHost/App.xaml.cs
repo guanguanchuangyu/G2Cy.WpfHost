@@ -78,7 +78,8 @@ namespace G2Cy.WpfHost
             containerRegistry.RegisterSingleton<ErrorHandlingService>();
             // 注册服务
             var host = new EventServerHostService(new ServerOptions { Address = "127.0.0.1", Port = 8080 });
-            var aggregator = new EventSocketAggregator(new ClientOptions { ServerAddress = "127.0.0.1", ServerPort = 8080 });
+            ILogger<EventSocketAggregator> logger = Container.Resolve<ILogger<EventSocketAggregator>>();
+            var aggregator = new EventSocketAggregator(logger,new ClientOptions { ServerAddress = "127.0.0.1", ServerPort = 8080 });
             // 注册事件队列
             containerRegistry.RegisterInstance(host);
             containerRegistry.RegisterInstance<IEventAggregator>(aggregator);
