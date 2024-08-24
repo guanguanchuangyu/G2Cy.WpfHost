@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "BitnessCheck": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}
